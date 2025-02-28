@@ -1,1 +1,19 @@
--r requirements/production.txt
+# development
+Django 
+psycopg2
+djangorestframework
+django_redis
+drf-spectacular
+djangorestframework-simplejwt
+markdown
+django-filter
+pytest-django
+pytest
+faker
+celery
+redis
+django-celery-beat
+sentry-sdk[django]
+# production
+gunicorn
+django-cors-headers

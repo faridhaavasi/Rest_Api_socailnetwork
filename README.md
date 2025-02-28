@@ -1,40 +1,104 @@
-# Socialnetwork
 
-## project setup
+# Optimal-structure-of-Django-apps
 
-1- compelete cookiecutter workflow (recommendation: leave project_slug empty) and go inside the project
-```
-cd Socialnetwork
-```
 
-2- SetUp venv
-```
-virtualenv -p python3.10 venv
-source venv/bin/activate
-```
+## Running the Project
 
-3- install Dependencies
-```
-pip install -r requirements_dev.txt
-pip install -r requirements.txt
-```
+To run the project, you need to create a `.env` file in the project's root directory and enter the required values. (Instructions are provided below)
 
-4- create your env
-```
-cp .env.example .env
-```
+### Steps to Run the Project
 
-5- Create tables
-```
-python manage.py migrate
-```
+1. **Create a .env file**:  
+   In the root directory of the project, create a file named `.env`.
 
-6- spin off docker compose
-```
-docker compose -f docker-compose.dev.yml up -d
-```
+2. **Set up the .env file**:  
+   Open the `.env` file and enter the necessary configuration values. Below is an example of the values you need to configure:
 
-7- run the project
-```
-python manage.py runserver
-```
+   ```env
+   # Database configuration
+   POSTGRES_DB=mydatabase
+   POSTGRES_USER=root
+   POSTGRES_PASSWORD=my-password
+   DB_HOST=db
+   DB_PORT=5432
+   
+   # Redis configuration
+   REDIS_HOST=redis
+   REDIS_PORT=6379
+   # Django configuration
+   SECRET_KEY=''
+   DEBUG=True
+
+   # Sentry 
+   SENTRY_DSN = ''   
+
+
+
+
+
+
+3. **Run the project locally**:  
+   Open your terminal and enter the following command to run the project in development mode:
+
+   1:
+   
+   ```bash
+   python -m venv venv
+   ```
+   2:
+   ```bash
+   venv\Scripts\activate
+   ```
+   3:
+   ```bash
+   pip install -r requirements.txt
+   ```
+   4: create SECRET_KEY
+   ```bash
+   python manage.py shell
+   
+   ```
+      
+   ```bash
+   >>> from django.core.management.utils import get_random_secret_key
+   >>> key = get_random_secret_key()
+    # key == SECRET_KEY   
+   ```
+   
+   **Hint 
+      Sentry is used for the logging process.
+      Read the documentation from the link below
+
+      https://sentry.io
+   
+
+   
+
+   
+
+
+
+6. **Run the project in production environment**:  
+   To deploy the project in production mode, use the following command:
+
+   ```bash
+   docker-compose -f docker-compose-stage.yaml up --build -d
+   ```
+
+7. **Build the database and Redis containers**:  
+   To initialize the database and Redis containers, run the following command:
+
+   ```bash
+   docker-compose up --build -d 
+   ```
+     
+   ```bash
+   docker-compose exec backend python manage.py (syntax)
+   ``` 
+   ```bash
+      docker-compose exec backend python manage.py makemigrations 
+      docker-compose exec backend python manage.py migrate
+   ```       
+
+
+   
