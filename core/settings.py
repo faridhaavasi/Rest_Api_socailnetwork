@@ -165,6 +165,7 @@ USE_I18N = True
 USE_TZ = True
 # auth 
 
+AUTH_USER_MODEL = "users.User"
 
 
 
