@@ -17,11 +17,13 @@ class SeteEailApiView(GenericAPIView):
         if serializer.is_valid():
             email = serializer.validated_data['email']
             user, vlaue = User.objects.get_or_create(email=email)
+            user.is_active = False
+            user.save()
             token = RefreshToken.for_user(user).access_token
 
             email_obj = EmailMessage(
                 subject='Confirm your email',
-                body=str(token),
+                body=f' click in link: {str(token)}',
                 from_email=settings.EMAIL_HOST_USER,
                 to=[user.email]
             )

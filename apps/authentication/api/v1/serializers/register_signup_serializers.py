@@ -9,5 +9,3 @@ class StepSetEmailRegisterSerializer(serializers.Serializer):
         if is_exists_email:
             raise serializers.ValidationError('This email exists')
         return value  
-
-
