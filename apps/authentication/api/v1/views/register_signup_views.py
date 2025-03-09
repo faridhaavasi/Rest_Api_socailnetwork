@@ -1,9 +1,10 @@
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from apps.authentication.api.v1.serializers.register_signup_serializers import (
     StepSetEmailRegisterSerializer,
+    StepSetPasswordRegisterSerializer
 )
 from django.conf import settings
 from apps.users.models import User
@@ -33,4 +34,42 @@ class SeteEailApiView(GenericAPIView):
             print(token)
             return Response({'message': 'Registration successful! Please check your email to confirm your account.'}, status=status.HTTP_201_CREATED)
         
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ConfirmEmailApiView(GenericAPIView):
+    def get(self, request, token):
+        try:
+            access_token = AccessToken(token)
+            user_id = access_token['user_id']  # get user id from token
+            user = User.objects.get(id=user_id)
+            user.is_active = True
+            user.is_verify = True
+            user.save()
+
+            return Response({'message': 'Email confirmed successfully!'}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'message': 'Invalid or expired token'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SetPasswordApiView(GenericAPIView):
+    serializer_class = StepSetPasswordRegisterSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            try:
+                token = serializer.validated_data['token']
+                access_token = AccessToken(token)  #  decode token
+                user_id = access_token['user_id']  # get user id from token
+
+                user = User.objects.get(id=user_id)  #  find user by id 
+                password = serializer.validated_data['password']
+
+                user.set_password(password)
+                user.save()
+
+                return Response({'message': 'Password set successfully!'}, status=status.HTTP_200_OK)
+            except Exception as e:
+                return Response({'message': 'Invalid or expired token'}, status=status.HTTP_400_BAD_REQUEST)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
