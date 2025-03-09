@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from apps.authentication.api.v1.serializers.register_signup_serializers import (
     StepSetEmailRegisterSerializer,
-    StepSetPasswordRegisterSerializer
+    StepSetPasswordRegisterSerializer,
 )
 from django.conf import settings
 from apps.users.models import User
