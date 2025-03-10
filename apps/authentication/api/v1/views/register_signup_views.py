@@ -78,9 +78,9 @@ class SetPasswordApiView(GenericAPIView):
     
 
 class RestorePasswordApiView(GenericAPIView):
-    serualizer_class = RestorePasswordSerializer
+    serializer_class = RestorePasswordSerializer
     def post(self, request):
-        serializer = self.serualizer_class(data=request.data)
+        serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             email = serializer.validated_data['email']
             user = User.objects.get(email=email)
