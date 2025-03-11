@@ -19,5 +19,5 @@ urlpatterns = [
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('restorepassword', RestorePasswordApiView.as_view(), name='restore_password'),
-    path('restorepasswordconfirm', RestorePasswordConfirmApiView.as_view(), name='restore_password_confirm'),
+    path('restorepasswordconfirm/<str:token>', RestorePasswordConfirmApiView.as_view(), name='restore_password_confirm'),
 ]

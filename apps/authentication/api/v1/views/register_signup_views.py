@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.urls import reverse
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -23,10 +25,11 @@ class SeteEailApiView(GenericAPIView):
             user.is_active = False
             user.save()
             token = RefreshToken.for_user(user).access_token
+            url_confirm = f"{settings.FRONTEND_URL}{reverse('authentication:confirm_email', args=[str(token)])}"
 
             email_obj = EmailMessage(
                 subject='Confirm your email',
-                body=f' click in link: {str(token)}',
+                body= url_confirm,
                 from_email=settings.EMAIL_HOST_USER,
                 to=[user.email]
             )
@@ -85,10 +88,11 @@ class RestorePasswordApiView(GenericAPIView):
             email = serializer.validated_data['email']
             user = User.objects.get(email=email)
             token = RefreshToken.for_user(user).access_token
+            url_restore_password = f"{settings.FRONTEND_URL}{reverse('authentication:restore_password_confirm', args=[str(token)])}"
 
             email_obj = EmailMessage(
                 subject='Restore password',
-                body=f' click in link: {str(token)}',
+                body=f"{url_restore_password}",
                 from_email=settings.EMAIL_HOST_USER,
                 to=[user.email]
             )
@@ -102,11 +106,11 @@ class RestorePasswordApiView(GenericAPIView):
 
 class RestorePasswordConfirmApiView(GenericAPIView):
     serializer_class = RestorePasswordConfirmSerializer
-    def post(self, request):
+    def put(self, request, token):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             try:
-                token = serializer.validated_data['token']
+                token = token
                 access_token = AccessToken(token)  #  decode token
                 user_id = access_token['user_id']  # get user id from token
 

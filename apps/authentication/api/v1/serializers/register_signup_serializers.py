@@ -39,7 +39,6 @@ class RestorePasswordSerializer(serializers.Serializer):
     
     
 class RestorePasswordConfirmSerializer(serializers.Serializer):
-    token = serializers.CharField()
     password = serializers.CharField(min_length=8)
     password_confirm = serializers.CharField(min_length=8)
 
