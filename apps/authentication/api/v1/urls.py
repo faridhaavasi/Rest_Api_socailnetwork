@@ -14,10 +14,10 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path('setemail', SeteEailApiView.as_view(), name='set_email'),
-    path('confirmemail/<str:token>', ConfirmEmailApiView.as_view(), name='confirm_email'),
+    path('confirmemail/<str:value_token>', ConfirmEmailApiView.as_view(), name='confirm_email'),
     path('setpassword', SetPasswordApiView.as_view(), name='set_password'),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('restorepassword', RestorePasswordApiView.as_view(), name='restore_password'),
-    path('restorepasswordconfirm/<str:token>', RestorePasswordConfirmApiView.as_view(), name='restore_password_confirm'),
+    path('restorepasswordconfirm/<str:value>', RestorePasswordConfirmApiView.as_view(), name='restore_password_confirm'),
 ]
