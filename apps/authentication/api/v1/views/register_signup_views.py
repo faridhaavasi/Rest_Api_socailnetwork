@@ -15,7 +15,7 @@ from django.conf import settings
 from apps.users.models import User
 from apps.authentication.models import TokenModel
 from apps.authentication.utils import EmailMessage, EmailSendThread
-
+from apps.account.models import AccountModel
 
 class SeteEailApiView(GenericAPIView):
     serializer_class = StepSetEmailRegisterSerializer
@@ -56,6 +56,7 @@ class ConfirmEmailApiView(GenericAPIView):
             user.is_active = True
             user.is_verify = True
             user.save()
+            AccountModel.objects.create(user=user)
 
             return Response({'message': 'Email confirmed successfully!', 'access_token':access_token}, status=status.HTTP_200_OK)
         except Exception as e:
