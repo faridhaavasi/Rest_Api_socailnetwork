@@ -58,7 +58,7 @@ class ConfirmEmailApiView(GenericAPIView):
             user.save()
             AccountModel.objects.create(user=user)
 
-            return Response({'message': 'Email confirmed successfully!', 'access_token':access_token}, status=status.HTTP_200_OK)
+            return Response({'message': 'Email confirmed successfully!', 'access_token':str(access_token)}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'message': 'Invalid or expired token'}, status=status.HTTP_400_BAD_REQUEST)
 
