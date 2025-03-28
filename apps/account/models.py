@@ -10,6 +10,6 @@ class AccountModel(models.Model):
     bio = models.TextField(max_length=500,null=True ,blank=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user.email
     
     
