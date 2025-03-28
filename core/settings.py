@@ -48,6 +48,7 @@ LOCAL_APPS = [
     'apps.users.apps.UsersConfig' ,
     'apps.authentication.apps.AuthenticationConfig' ,
     'apps.account.apps.AccountConfig' ,
+    'apps.posts.apps.PostsConfig' ,
 ]
 
 INSTALLED_APPS = [
