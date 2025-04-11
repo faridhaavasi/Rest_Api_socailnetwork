@@ -2,6 +2,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from apps.posts.permissions import IsAuthorOnly
 from apps.posts.models import Post
 from apps.posts.api.v1.serializers.post_serializers import InputPostSerializer, OutputPostSerializer
 from django.contrib.auth import get_user_model
@@ -44,7 +45,7 @@ class PostListAllViewApi(GenericAPIView):
     API view to list all posts.
     """
     serializer_class = OutputPostSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAuthorOnly]
 
     def get(self, request):
         """
@@ -59,7 +60,7 @@ class PostListPublishedViewApi(GenericAPIView):
     API view to list published posts.
     """
     serializer_class = OutputPostSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAuthorOnly]
 
     def get(self, request):
         """
@@ -75,7 +76,7 @@ class PostDetailViewApi(GenericAPIView):
     API view to retrieve, update, or delete a post.
     """
     serializer_class = OutputPostSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAuthorOnly]
 
     def get(self, request,pk):
         """
@@ -93,7 +94,7 @@ class PostUpdateViewApi(GenericAPIView):
     API view to update a post.
     """
     serializer_class = InputPostSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAuthorOnly]
 
     def put(self, request, pk):
         """
@@ -113,7 +114,7 @@ class PostDeleteViewApi(GenericAPIView):
     """
         API view to delete a post.
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAuthorOnly]
     def delete(self, request, pk):
         try:
             post = Post.objects.get(id=pk)
