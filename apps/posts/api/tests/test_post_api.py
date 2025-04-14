@@ -33,3 +33,17 @@ class TestPostApi:
         }
         response = api_client.post(url, data, format="json")
         assert response.status_code == 201
+
+    def test__list_post(self, api_client, create_user):
+        api_client.force_authenticate(user=create_user)
+        url = reverse("posts_v1:list_all_posts")
+        response = api_client.get(url, format="json")
+        assert response.status_code == 200
+    
+    def test__list_published_post(self, api_client, create_user):
+        api_client.force_authenticate(user=create_user)
+        url = reverse("posts_v1:list_published_posts")
+        response = api_client.get(url, format="json")
+        assert response.status_code == 200
+
+    
