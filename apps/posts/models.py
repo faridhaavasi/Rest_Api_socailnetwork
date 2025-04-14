@@ -28,10 +28,7 @@ class Post(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
-    def publish(self):
-        self.is_published = True
-        self.published_at = timezone.datetime.now()
-        self.save()
+
 
     def __str__(self):
         return f'{self.title} by {self.author.email}'
