@@ -14,7 +14,7 @@ class PostManager(models.Manager):
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255, unique=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     image = models.ImageField(upload_to='posts/images/', null=True, blank=True)
     content = models.TextField()
     author = models.ForeignKey(user, on_delete=models.CASCADE, related_name='posts')
