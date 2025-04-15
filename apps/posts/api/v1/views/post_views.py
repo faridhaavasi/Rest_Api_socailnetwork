@@ -119,6 +119,6 @@ class PostDeleteViewApi(GenericAPIView):
         try:
             post = Post.objects.get(id=pk)
             post.delete()
-            return Response({"messagr": "post deleted"}, status=status.HTTP_201_CREATED)
+            return Response({"messagr": "post deleted"}, status=status.HTTP_204_NO_CONTENT)
         except Post.DoesNotExist:
             return Response({"error": "Post not found"}, status=status.HTTP_404_NOT_FOUND)
