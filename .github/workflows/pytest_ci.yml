@@ -7,21 +7,20 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
-    - name: ste env
-      run: touch .env
-    - name: cp env example for env file
-      run: cp .env_example .env
-    - uses: actions/checkout@v4
-    - name: docker-compose run
-      run: docker-compose up --build -d
-    - name: test with pytest
-      run: docker-compose exec backend sh -c "pytest ."
-    
 
+    - name: Create .env file
+      run: cp .env_example .env
+
+    - name: Build and start containers
+      run: docker-compose up --build -d
+
+    - name: Wait for services to be ready
+      run: sleep 10
+
+    - name: Run tests
+      run: docker-compose exec backend pytest
