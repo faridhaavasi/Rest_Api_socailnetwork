@@ -13,10 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install Docker Compose plugin
-      run: |
-        sudo apt-get update
-        sudo apt-get install docker-compose-plugin
 
     - name: Create .env file
       run: cp .env_example .env
@@ -28,4 +24,4 @@ jobs:
       run: sleep 10
 
     - name: Run tests
-      run: docker-compose exec backend pytest
+      run: docker compose exec backend pytest
