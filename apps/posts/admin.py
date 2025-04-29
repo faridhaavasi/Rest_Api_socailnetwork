@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.posts.models import Post
+from apps.posts.models import Post, Comment
 # Register your models here.
 
 class PostAdmin(admin.ModelAdmin):
@@ -21,4 +21,19 @@ class PostAdmin(admin.ModelAdmin):
     readonly_fields = ('published_at',)
 
 
+
 admin.site.register(Post, PostAdmin)
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('post', 'author', 'created_at')
+    list_filter = ('created_at',)
+    search_fields = ('content',)
+    date_hierarchy = 'created_at'
+    ordering = ('-created_at',)
+    fieldsets = (
+        (None, {
+            'fields': ('post', 'replay', 'author', 'content')
+        }),
+    )
+    readonly_fields = ('created_at',)
+admin.site.register(Comment, CommentAdmin)
