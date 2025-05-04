@@ -9,7 +9,7 @@ class InputCommentSerializer(serializers.ModelSerializer):
     is_replay = serializers.BooleanField(default=False, required=False)
     class Meta:
         model = Comment
-        fields = ['post', 'replay', 'author', 'content']
+        fields = ['post', 'replay', 'author', 'content', 'is_replay']
         read_only_fields = ['author']
         extra_kwargs = {
             'post': {'required': True},
@@ -20,9 +20,12 @@ class InputCommentSerializer(serializers.ModelSerializer):
         }
 
 class OutputCommentSerializer(serializers.ModelSerializer):
+    def replay_childs(self, obj):
+        return OutputCommentSerializer(obj.replay.all(), many=True).data
+    replay_childs = serializers.SerializerMethodField()
     class Meta:
         model = Comment
-        fields = ['id', 'post', 'replay', 'author', 'content', 'created_at', 'updated_at']
+        fields = ['id', 'post', 'replay' ,'author', 'content', 'created_at', 'updated_at', 'replay_childs']
         read_only_fields = ['created_at', 'updated_at']
         extra_kwargs = {
             'post': {'required': True},
@@ -31,12 +34,3 @@ class OutputCommentSerializer(serializers.ModelSerializer):
             'content': {'required': True},
         }
 
-class ReplayCommentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Comment
-        fields = ['replay']
-        read_only_fields = ['replay']
-        extra_kwargs = {
-            'replay': {'required': True},
-        }
-        
