@@ -1,5 +1,4 @@
 import uuid
-from django.conf import settings
 from django.urls import reverse
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response

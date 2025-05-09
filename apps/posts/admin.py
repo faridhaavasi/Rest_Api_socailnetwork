@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.posts.models import Post, Comment, Replay
+from apps.posts.models import Post, Comment, Replay, Like
 # Register your models here.
 
 class PostAdmin(admin.ModelAdmin):
@@ -52,3 +52,4 @@ class ReplayAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at',)
 
 admin.site.register(Replay, ReplayAdmin)
+admin.site.register(Like)
