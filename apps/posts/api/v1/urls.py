@@ -9,6 +9,7 @@ from apps.posts.api.v1.views.post_views import (
     PostDeleteViewApi,
     PostUpdateViewApi,
 )
+from apps.posts.api.v1.views.like_views import LikeViewSet
 
 app_name = 'posts_v1'
 
@@ -18,6 +19,7 @@ router.register(
     CommentViewSet,
     basename='post-comments'
 )
+router.register(r'likes', LikeViewSet, basename='likes')
 
 urlpatterns = [
     # Post Views
