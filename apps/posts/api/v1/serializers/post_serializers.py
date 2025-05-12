@@ -19,6 +19,9 @@ class InputPostSerializer(serializers.ModelSerializer):
 
 
 class OutputPostSerializer(serializers.ModelSerializer):
+    likes = serializers.SerializerMethodField()
+    def get_likes(self, obj):
+        return obj.likes.count()
     comments = serializers.SerializerMethodField()
     def get_comments(self, obj):
         comments = obj.comments.all()
@@ -29,7 +32,8 @@ class OutputPostSerializer(serializers.ModelSerializer):
                 'image', 'content', 
                 'author', 'created_at',
                 'updated_at', 'is_published',
-                'published_at', 'comments'
+                'published_at', 'comments',
+                'likes'
                 ]
 
              
