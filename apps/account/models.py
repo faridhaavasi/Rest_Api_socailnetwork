@@ -12,4 +12,16 @@ class AccountModel(models.Model):
     def __str__(self):
         return self.user.email
     
-    
+
+
+
+class FollowerModel(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers')
+    follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
+
+    def __str__(self):
+        return f"{self.user.email} follows {self.follower.email}"
+    class Meta:
+        unique_together = ('user', 'follower')
+        verbose_name = 'Follower'
+        verbose_name_plural = 'Followers'
